@@ -5,20 +5,18 @@ from flask_cors import CORS
 import os
 import requests
 import sqlite3
-<<<<<<< HEAD
 import bs4
 import time
-=======
->>>>>>> facbff95e19e8ada55f236a083a73a04b853c9fe
 
-DATABASE = 'crypto_db.db'
+basedir = os.path.abspath(os.path.dirname(__file__))
+DATABASE = basedir+'/crypto_db.db'
 
 app = Flask(__name__)
 app.config.from_object(__name__)
 
-<<<<<<< HEAD
 def get_news():
-    page = requests.get("https://coins.live/news/")
+    hdr = {'User-Agent': 'Mozilla/5.0'}
+    page = requests.get("https://coins.live/news/", headers=hdr)
     soup = bs4.BeautifulSoup(page.content, 'html.parser')
     headings = soup.body.find_all('span', attrs={'class': 'card-title'})
     response = {}
@@ -55,8 +53,6 @@ def get_uncomfirmed(id):
     response['total'] = total
     return jsonify(response)
 
-=======
->>>>>>> facbff95e19e8ada55f236a083a73a04b853c9fe
 def connect_db():
     return sqlite3.connect(app.config['DATABASE'])
 
@@ -74,11 +70,7 @@ def get_balance(crypto, address):
     url = f"https://api.blockcypher.com/v1/{str(crypto)}/main/addrs/{str(address)}/balance"
     response = requests.get(url)
     data = json.loads(response.content)
-<<<<<<< HEAD
     factors = {'btc':8, 'eth':18, 'ltc':8, 'doge':8}
-=======
-    factors = {'btc':8, 'eth':18, 'ltc':8}
->>>>>>> facbff95e19e8ada55f236a083a73a04b853c9fe
     factor = factors[crypto]
     try:
         data['balance']
@@ -91,7 +83,6 @@ def fetch_value(id, crypto):
     cursor = db.cursor()
     query = 'SELECT * FROM crypto WHERE id=?'
     q = cursor.execute(query, (id,))
-<<<<<<< HEAD
     C = ['btc', 'eth', 'ltc', 'doge']
     addresses = q.fetchone()
     if(crypto == "all"):
@@ -114,28 +105,10 @@ def register(data):
     db = connect_db()
     cursor = db.cursor()
     sql = '''INSERT INTO crypto(id, btc, eth, ltc, doge) VALUES(?,?,?,?,?) '''
-=======
-    addresses = q.fetchone()
-    cryptos = ['btc', 'eth', 'ltc']
-    value = 0
-    for crypto, address in zip(cryptos, addresses[1:]):
-        b = get_balance(crypto, address)
-        p = fetch_price(crypto.upper(), flag = address)
-        value += b*p
-    response = {'id' : id, 'value' : value}
-    return jsonify(response)
-
-def register(data):
-    # add assertions to data? maybe later
-    db = connect_db()
-    cursor = db.cursor()
-    sql = '''INSERT INTO crypto(id, btc, eth, ltc, xrp) VALUES(?,?,?,?,?) '''
->>>>>>> facbff95e19e8ada55f236a083a73a04b853c9fe
     cursor.execute(sql, data)
     db.commit()
     return str("done")
 
-<<<<<<< HEAD
 def return_price(crypto):
     crypto = crypto.upper()
     timestamp = int(time.time())
@@ -161,8 +134,6 @@ def market_cap(crypto):
     response = {"cap" : cap}
     return jsonify(response)
 
-=======
->>>>>>> facbff95e19e8ada55f236a083a73a04b853c9fe
 CORS(app)
 @app.route("/",methods=['GET'])
 def index():
@@ -177,7 +148,6 @@ def index():
         request.args.get('btc'),
         request.args.get('eth'),
         request.args.get('ltc'),
-<<<<<<< HEAD
         request.args.get('doge'),
         )
         return register(data)
@@ -198,15 +168,6 @@ def index():
 # http://127.0.0.1:5000/?action=news&crypto=btc
 # http://127.0.0.1:5000/?action=register&id=123&btc_addy=thislongshittieraddyisthenewaddyman
 # http://127.0.0.1:5000/?action=register&id=666&btc=ayy&eth=ayy&ltc=ayy&doge=ayy2
-=======
-        request.args.get('xrp'),
-        )
-        return register(data)
-
-
-# http://127.0.0.1:5000/?action=fetch&id=1
-# http://127.0.0.1:5000/?action=register&id=123&btc_addy=thislongshittieraddyisthenewaddyman
-# http://127.0.0.1:5000/?action=register&id=99&btc=btc_add&eth=eth_add&ltc=ltc_add&xrp=xrp_add
->>>>>>> facbff95e19e8ada55f236a083a73a04b853c9fe
 if __name__ == "__main__":
+
     app.run()
