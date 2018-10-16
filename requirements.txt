@@ -1,0 +1,1 @@
+flask flask_api flask_cors jsonify requests bs4 json
