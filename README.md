@@ -36,7 +36,7 @@ NOTE: for testing purpose use ALEXA_ID = 1, i have added this to the database, i
 I am handling the registration process so dont worry about it, for now assume ID=1 is registered with all four addresses in our database. 
 
 1. fetch value of porfolio:   
-  http://alexaskill.pythonanywhere.com/?action=fetch&id=[ALEXA ID]&crypto=[CRYPTO_LIMITED]  
+  http://alexaskill.pythonanywhere.com/?action=fetch&id=[ALEXA_ID]&crypto=[CRYPTO_LIMITED]  
   replace [ALEXA_ID] with alexa_id, dahiya should know how to get it. For testing use id = 1  
   replace [CRYPTO_LIMITED] with :-  
     1. all: fetch the value of the complete portfolio, all of it
