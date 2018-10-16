@@ -68,7 +68,7 @@ I am handling the registration process so dont worry about it, for now assume ID
 
   
 
-## tldr how to set up 
+## tldr how to set up  OBSELETE DONT READ THIS
 - run `databse.py` to make the database
 - run `python flask_app.py` to start the app
 - make queries such as :  
