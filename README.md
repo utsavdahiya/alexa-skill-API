@@ -27,9 +27,9 @@ Account independent features :-
 
 3. Crypto news       
   http://alexaskill.pythonanywhere.com/?action=news    
-  will have a single field:    
-  1. news: its an array of strings which are the news headlines
-  THIS IS NOT WORKING ON PYTHONANYWHERE AS THEY BAN THIRD PARTY https URLs, fix coming by sunset today
+  will have a single field:  
+    1. news: its an array of strings which are the news headlines
+     THIS IS NOT WORKING ON PYTHONANYWHERE AS THEY BAN THIRD PARTY https URLs, fix coming by sunset today
 
 Account dependent features:-  
 NOTE: for testing purpose use ALEXA_ID = 1, i have added this to the database, it will get your results. In other cases, replace the alexa ID by the actual alexa ID, if its registered you will get a response, if not you won't get any response in that case say "Sorry you are not registerd with us, please register your alexa id on the link written in description".
