@@ -25,9 +25,9 @@ Account independent features :-
       2. cap in USD: market cap in USD
       3. crypto: the name of crypto
 
-3. Crypto news   
-  http://alexaskill.pythonanywhere.com/?action=news  
-  will have a single field:  
+3. Crypto news       
+  http://alexaskill.pythonanywhere.com/?action=news    
+  will have a single field:    
   1. news: its an array of strings which are the news headlines
   THIS IS NOT WORKING ON PYTHONANYWHERE AS THEY BAN THIRD PARTY https URLs, fix coming by sunset today
 
@@ -62,7 +62,7 @@ I am handling the registration process so dont worry about it, for now assume ID
    tip: first speak the total uncofimed transactions then speak only the non zero uncofimed for example: "you have 4 total unconfirmed      transactions, 2 bitcoin, 1 ethereum and 1 doge" 
 
 3. Register new user  
-  alexaskill.pythonanywhere.com/?action=register&id=[ALEXA_ID]&btc=ayy&eth=ayy&ltc=ayy&doge=ayy2  
+  http://alexaskill.pythonanywhere.com/?action=register&id=[ALEXA_ID]&btc=ayy&eth=ayy&ltc=ayy&doge=ayy2   
   DONT BOTHER WITH IT, I AM HANDLING THIS  
   it will register the [ALEXA_ID] with the btc address ayy, eth address ayy, ltc address ayy, doge address ayy2 on our databse and then can be used by above API features. 
 
