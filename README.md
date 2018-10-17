@@ -21,15 +21,14 @@ Account independent features :-
   http://alexaskill.pythonanywhere.com/?action=cap&crypto=[CRYPTO]  
     replace [CRYPTO] with btc, eth, doge, ltc, xrp, anything...   
     reponse will be a single field:-  
-      1. cap: the total amount of coins in market. Speak this in millions/billions
-      2. cap in USD: market cap in USD
-      3. crypto: the name of crypto
+      1. cap: the total calue of coins in market. Speak this in millions/billions (speak B as billion and M as million)
+
 
 3. Crypto news       
   http://alexaskill.pythonanywhere.com/?action=news    
   will have a single field:  
     1. news: its an array of strings which are the news headlines
-     THIS IS NOT WORKING ON PYTHONANYWHERE AS THEY BAN THIRD PARTY https URLs, fix coming by sunset today
+     FIXED: top 100 news articles are fetched from: https://news.google.com/search?q=cryptocurrency
 
 Account dependent features:-  
 NOTE: for testing purpose use ALEXA_ID = 1, i have added this to the database, it will get your results. In other cases, replace the alexa ID by the actual alexa ID, if its registered you will get a response, if not you won't get any response in that case say "Sorry you are not registerd with us, please register your alexa id on the link written in description".
