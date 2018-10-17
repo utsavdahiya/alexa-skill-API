@@ -43,7 +43,9 @@ I am handling the registration process so dont worry about it, for now assume ID
     3. eth: fetch the amount of ether held
     4. ltc: same
     5. doge: same
+    
   the reponse will have :-  
+  
     1. balance: total balance in USD
     2. x: number of crypto x held
     3. x_usd: amount of cryptp held in USD
