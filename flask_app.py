@@ -6,6 +6,7 @@ import os
 import requests
 import sqlite3
 import bs4
+import datetime
 import time
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -44,6 +45,8 @@ def get_uncomfirmed(id):
     query = 'SELECT * FROM crypto WHERE id=?'
     q = cursor.execute(query, (id,))
     addresses = q.fetchone()
+    if not addresses:
+        return jsonify({'response':'user does not exist'})
     total = 0
     cryptos = ['btc', 'eth', 'ltc', 'doge']
     response = {}
@@ -66,7 +69,7 @@ def fetch_price(crypto, flag = 0, currency = 'USD'):
 
 def get_balance(crypto, address):
     if not address:
-        return 0
+        return jsonify({'response':'user does not exist'})
     url = f"https://api.blockcypher.com/v1/{str(crypto)}/main/addrs/{str(address)}/balance"
     response = requests.get(url)
     data = json.loads(response.content)
@@ -85,6 +88,8 @@ def fetch_value(id, crypto):
     q = cursor.execute(query, (id,))
     C = ['btc', 'eth', 'ltc', 'doge']
     addresses = q.fetchone()
+    if not addresses:
+        return jsonify({'response':'user does not exist'})
     if(crypto == "all"):
         cryptos = C
     else:
@@ -104,10 +109,10 @@ def fetch_value(id, crypto):
 def register(data):
     db = connect_db()
     cursor = db.cursor()
-    sql = '''INSERT INTO crypto(id, btc, eth, ltc, doge) VALUES(?,?,?,?,?) '''
+    sql = '''INSERT OR REPLACE INTO crypto(id, btc, eth, ltc, doge) VALUES(?,?,?,?,?) '''
     cursor.execute(sql, data)
     db.commit()
-    return str("done")
+    return jsonify({'response':'new user registered'})
 
 def return_price(crypto):
     crypto = crypto.upper()
@@ -132,6 +137,33 @@ def market_cap(crypto):
     print(data)
     cap = data['DISPLAY'][crypto.upper()]['USD']['MKTCAP']
     response = {"cap" : cap}
+    return jsonify(response)
+
+def get_index(date):
+    if not date :
+        return
+    elif date == "tommorrow":
+        return 1
+    elif date == 'day_after':
+        return 2
+    else:
+        date = datetime.datetime.strptime(date, "%d/%m/%Y")
+        current_date = datetime.datetime.today()
+        index = (date - current_date).days + 1
+        if index > 1 and index < 29 :
+            return index
+    return
+
+def get_prediction(crypto, date):
+    index = get_index(date)
+    if not index:
+        return jsonify({'prediction':"invalid date"})
+    file = str("/" +crypto) + '_predictions.csv'
+    with open(basedir + file, 'r') as handle:
+        data = handle.read()
+    prediction = data.split('\n')[index].split(',')[2]
+    price = "{:.2f}".format(float(prediction))
+    response = {'prediction':price, 'days_from_now':index, 'crypto':crypto}
     return jsonify(response)
 
 CORS(app)
@@ -159,6 +191,9 @@ def index():
         return return_price(crypto)
     if action == 'cap':
         return market_cap(crypto)
+    if action == 'predict':
+        date = request.args.get('date')
+        return get_prediction(crypto, date)
     return "up and running"
 
 
@@ -170,7 +205,7 @@ def index():
 # http://127.0.0.1:5000/?action=news&crypto=btc
 # http://127.0.0.1:5000/?action=register&id=123&btc_addy=thislongshittieraddyisthenewaddyman
 # http://127.0.0.1:5000/?action=register&id=666&btc=ayy&eth=ayy&ltc=ayy&doge=ayy2
-http://127.0.0.1:5000/?action=register&id=kumar.vaibhav_1o1@gmail.com&btc=ayy&eth=ayy&ltc=ayy&doge=ayy2
+# http://127.0.0.1:5000/?action=predict&date=21/10/2018&crypto=btc
+# http://127.0.0.1:5000/?action=register&id=kumar.vaibhav_1o1@gmail.com&btc=ayy&eth=ayy&ltc=ayy&doge=ayy2
 if __name__ == "__main__":
-
     app.run()
