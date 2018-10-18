@@ -29,6 +29,24 @@ Account independent features :-
   will have a single field:  
     1. news: its an array of strings which are the news headlines
      FIXED: top 100 news articles are fetched from: https://news.google.com/search?q=cryptocurrency
+     
+4. Price prediction (using artificial intelligence) 
+  http://alexaskill.pythonanywhere.com/?action=predict&date=[DATE]&crypto=[CRYPTO_LIMITED]
+   [DATE] can be :-
+     1. tommorrow
+     2. day_after
+     3. DD/MM/YYYY format for anyday until 30 days from now. Server will automatically handle invalid requests and return appropriate response so don't worry about it eg. 21/10/2018 is a valid date but 10/10/2016 is not (past) server will handle it dont worry  
+   [CRYPTO_LIMITED] can be :-
+     1. btc
+     2. eth
+     3. doge
+     4. ltc
+     
+   response will have the following fields:
+     1. prediction : predicted price 
+     2. crypto: name of crypto for which the prediction is requested
+     3. days_from_now: number of days between today and the date prediction is asked for
+
 
 Account dependent features:-  
 NOTE: for testing purpose use ALEXA_ID = 1, i have added this to the database, it will get your results. In other cases, replace the alexa ID by the actual alexa ID, if its registered you will get a response, if not you won't get any response in that case say "Sorry you are not registerd with us, please register your alexa id on the link written in description".
