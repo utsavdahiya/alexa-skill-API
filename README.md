@@ -32,6 +32,7 @@ Account independent features :-
      
 4. Price prediction (using artificial intelligence) 
   http://alexaskill.pythonanywhere.com/?action=predict&date=[DATE]&crypto=[CRYPTO_LIMITED]
+   
    [DATE] can be :-
      1. tommorrow
      2. day_after
