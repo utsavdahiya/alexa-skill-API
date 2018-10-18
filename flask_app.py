@@ -16,9 +16,9 @@ app.config.from_object(__name__)
 
 def get_news():
     hdr = {'User-Agent': 'Mozilla/5.0'}
-    page = requests.get("https://coins.live/news/", headers=hdr)
+    page = requests.get("https://news.google.com/search?q=cryptocurrency", headers=hdr)
     soup = bs4.BeautifulSoup(page.content, 'html.parser')
-    headings = soup.body.find_all('span', attrs={'class': 'card-title'})
+    headings = soup.body.find_all('p', attrs={'class': ["HO8did" ,"Baotjf"]})
     response = {}
     news = []
     for heading in headings:
@@ -130,7 +130,7 @@ def market_cap(crypto):
     data = json.loads(response.content)
     # current_price = data[crypto]['USD']
     print(data)
-    cap = data['RAW'][crypto.upper()]['USD']['MKTCAP']
+    cap = data['DISPLAY'][crypto.upper()]['USD']['MKTCAP']
     response = {"cap" : cap}
     return jsonify(response)
 
@@ -159,15 +159,18 @@ def index():
         return return_price(crypto)
     if action == 'cap':
         return market_cap(crypto)
+    return "up and running"
 
 
 # http://127.0.0.1:5000/?action=fetch&id=1&crypto=all
 # http://127.0.0.1:5000/?action=fetch&id=1&crypto=eth
 # http://127.0.0.1:5000/?action=unconfirmed&id=1
 # http://127.0.0.1:5000/?action=price&crypto=btc
+# http://127.0.0.1:5000/?action=cap&crypto=btc
 # http://127.0.0.1:5000/?action=news&crypto=btc
 # http://127.0.0.1:5000/?action=register&id=123&btc_addy=thislongshittieraddyisthenewaddyman
 # http://127.0.0.1:5000/?action=register&id=666&btc=ayy&eth=ayy&ltc=ayy&doge=ayy2
+http://127.0.0.1:5000/?action=register&id=kumar.vaibhav_1o1@gmail.com&btc=ayy&eth=ayy&ltc=ayy&doge=ayy2
 if __name__ == "__main__":
 
     app.run()
